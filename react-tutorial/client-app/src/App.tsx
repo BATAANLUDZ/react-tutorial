@@ -4,9 +4,17 @@ import TimePage from './pages/TimePage/TimePage'
 
 function App() {
   return (
-    <div className="font-orbit h-screen w-screen grid grid-rows-[10vh,_1fr] gap-3">
+    <div className="h-screen w-screen grid grid-rows-[10vh,_1fr] gap-3">
       <div>
-        <Header userName="Test User" menus={[{ name: 'Time', path: '/' }]} />
+        <Header
+          userName="Test User"
+          menus={[
+            { name: 'Time IN/OUT', path: '/' },
+            { name: 'Calendar', path: '/1' },
+            { name: 'Leave Management', path: '/2' },
+            { name: 'Leave Summary', path: '/3' },
+          ]}
+        />
       </div>
       <div>
         <Routes>
