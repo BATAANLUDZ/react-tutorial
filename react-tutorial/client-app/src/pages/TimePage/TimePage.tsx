@@ -9,7 +9,7 @@ export default function TimePage() {
   const [workMode, setWorkMode] = useState<boolean>(false)
 
   return (
-    <div className="h-full flex justify-center items-center">
+    <div className="h-full flex justify-center items-center font-pt">
       <div className="border-[1px] border-gray-300 border-opacity-40 border-solid rounded-[100px] shadow-xl inline-flex flex-wrap items-center flex-col gap-3 w-[50vw] py-10">
         <div>
           <p className="text-[40px] text-red-800">{`${date.date}`}</p>

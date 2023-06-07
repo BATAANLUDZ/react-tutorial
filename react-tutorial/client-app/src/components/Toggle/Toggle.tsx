@@ -15,15 +15,15 @@ export const Toggle = (props: IToggleProps) => {
         <button
           className={`${
             checked
-              ? "bg-black after:content-['WFH'] after:text-white after:absolute after:left-2"
+              ? "bg-black after:content-['WFH'] after:text-white after:absolute after:left-[10px]"
               : "bg-gray-200 after:content-['F2F'] after:ml-3"
-          } relative inline-flex h-10 w-24 items-center rounded-full font-bold shadow-md font-orbit`}
+          } relative inline-flex h-10 w-24 items-center rounded-full font-bold shadow-md font-orbit pointer-events-none`}
         >
           <span className="sr-only">Enable notifications</span>
           <span
             className={`${
               checked ? 'translate-x-[59px]' : 'translate-x-1'
-            } inline-block h-8 w-8 transform rounded-full bg-white transition shadow-md`}
+            } inline-block h-8 w-8 rounded-full bg-white transition shadow-md`}
           />
         </button>
       )}

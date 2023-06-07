@@ -4,7 +4,7 @@ import TimePage from './pages/TimePage/TimePage'
 
 function App() {
   return (
-    <div className="h-screen w-screen grid grid-rows-[10vh,_1fr] gap-3">
+    <div className="h-screen w-screen grid grid-rows-[10vh,_1fr] gap-3 font-pt">
       <div>
         <Header
           userName="Test User"

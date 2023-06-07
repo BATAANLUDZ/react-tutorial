@@ -2,10 +2,8 @@
 export default {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
-    extend: {
-      fontFamily: {
-        orbit: ['Orbitron', 'sans-serif'],
-      },
+    fontFamily: {
+      pt: ['PT Sans', 'sans-serif'],
     },
   },
   plugins: [],
