@@ -1,12 +1,32 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from '../../components/Button/Button'
 import { Toggle } from '../../components/Toggle/Toggle'
 import { ButtonStyle } from '../../helpers/enums'
 import { useDate } from '../../hooks/useDate'
 
+async function HandleOnLoad() {
+  try {
+    const res = await fetch(
+      'https://localhost:44319/api/Time?employeeNo=CT12032',
+    )
+    const data = await res.json()
+
+    console.log(data)
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 export default function TimePage() {
   const date = useDate()
   const [workMode, setWorkMode] = useState<boolean>(false)
+
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-extra-semi
+    ;(async () => {
+      await HandleOnLoad()
+    })()
+  }, [])
 
   return (
     <div className="h-full flex justify-center items-center font-pt">
