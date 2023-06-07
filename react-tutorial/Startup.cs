@@ -36,6 +36,14 @@ namespace react_tutorial
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Tutorial", Version = "v1" });
             });
             services.AddDbContext<OAMSContext>(o => o.UseSqlServer(Configuration.GetConnectionString("OAMSConnectionString")));
+
+            services.AddCors(policy =>
+            {
+                policy.AddPolicy("CorsPolicy", opt => opt
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,7 +51,7 @@ namespace react_tutorial
         {
             if (env.IsDevelopment())
             {
-               
+
                 app.UseDeveloperExceptionPage();
             }
             else
@@ -64,6 +72,8 @@ namespace react_tutorial
             app.UseSpaStaticFiles();
 
             app.UseRouting();
+
+            app.UseCors("CorsPolicy");
 
             app.UseEndpoints(endpoints =>
             {

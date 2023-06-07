@@ -26,6 +26,14 @@ namespace react_tutorial.Controllers
             if (string.IsNullOrEmpty(employeeNo))
                 return BadRequest();
 
+            var employee = from user in _context.TBL_M_Employees
+                           where user.EmpNum == employeeNo
+                           select user;
+                           
+
+            if (!employee.Any())
+                return NotFound();
+
             var Project = (from project in _context.TBL_M_Projects
                            select new ProjectDDLDTO 
                            { ProjectId = project.ProjectID, ProjectName = project.ProjectName })
@@ -42,7 +50,7 @@ namespace react_tutorial.Controllers
                               where log.EmpNum == employeeNo
                               orderby log.LogDate descending
                               select new { TimeInStatus = log.TimeIn, TimeOutStatus = log.TimeOut })
-               .AsNoTracking().FirstOrDefault();
+                .AsNoTracking().FirstOrDefault();
 
             var result = new TimeOnloadDTO()
             {
