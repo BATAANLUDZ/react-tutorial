@@ -21,8 +21,11 @@ namespace react_tutorial.Controllers
             _context = context;
         }
         [HttpGet]
-        public IActionResult Index(string employeeNo)
+        public IActionResult Index([FromQuery]string employeeNo)
         {
+            if (string.IsNullOrEmpty(employeeNo))
+                return BadRequest();
+
             var Project = (from project in _context.TBL_M_Projects
                            select new ProjectDDLDTO 
                            { ProjectId = project.ProjectID, ProjectName = project.ProjectName })
