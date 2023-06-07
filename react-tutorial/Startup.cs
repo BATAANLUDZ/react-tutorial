@@ -2,10 +2,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using react_tutorial.Model.Context;
 
 namespace react_tutorial
 {
@@ -33,6 +35,7 @@ namespace react_tutorial
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Tutorial", Version = "v1" });
             });
+            services.AddDbContext<OAMSContext>(o => o.UseSqlServer(Configuration.GetConnectionString("OAMSConnectionString")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,7 +49,7 @@ namespace react_tutorial
             else
             {
                 app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see
                 app.UseHsts();
             }
 
