@@ -1,32 +1,19 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Button } from '../../components/Button/Button'
 import { Toggle } from '../../components/Toggle/Toggle'
 import { ButtonStyle } from '../../helpers/enums'
 import { useDate } from '../../hooks/useDate'
-
-async function HandleOnLoad() {
-  try {
-    const res = await fetch(
-      'https://localhost:44319/api/Time?employeeNo=CT12032',
-    )
-    const data = await res.json()
-
-    console.log(data)
-  } catch (err) {
-    console.log(err)
-  }
-}
+import { useQuery } from 'react-query'
+import { HandleOnLoad } from '../../apis/time'
 
 export default function TimePage() {
   const date = useDate()
   const [workMode, setWorkMode] = useState<boolean>(false)
 
-  useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-extra-semi
-    ;(async () => {
-      await HandleOnLoad()
-    })()
-  }, [])
+  const { data } = useQuery({
+    queryKey: ['timePage', 'CT12032'],
+    queryFn: () => HandleOnLoad('CT12032'),
+  })
 
   return (
     <div className="h-full flex justify-center items-center font-pt">
@@ -44,7 +31,7 @@ export default function TimePage() {
           <Button
             className="h-[100px] w-[200px] text-[40px]"
             text="Time-in"
-            btnType={ButtonStyle.Secondary}
+            btnType={data ? ButtonStyle.Secondary : ButtonStyle.Primary}
             onClick={() => alert(date.timeOnly)}
           />
         </div>
