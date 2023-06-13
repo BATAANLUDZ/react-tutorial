@@ -35,7 +35,7 @@ namespace react_tutorial.Controllers
             if (!employee.Any())
                 return NotFound();
 
-            var Project = (from project in _context.TBL_M_Projects
+            var Project = (from project in _context.TBL_M_Projects orderby project.ProjectName
                            select new ProjectDDLDTO
                            { ProjectId = project.ProjectID, ProjectName = project.ProjectName })
                            .AsNoTracking().ToList();
