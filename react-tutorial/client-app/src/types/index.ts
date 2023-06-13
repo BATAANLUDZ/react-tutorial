@@ -8,12 +8,12 @@ export type DropDownType = {
   value: string | number
 }
 
-type Project = {
+export type Project = {
   projectId: number
   projectName: string
 }
 
-type Shift = {
+export type Shift = {
   id: number
   shiftName: string
 }

@@ -13,11 +13,11 @@ export interface IDropDownProps {
 
 export const DropDown = ({ data, width, ...props }: IDropDownProps) => {
   return (
-    <div className="min-w-[200px]" style={{ width: width }}>
+    <div className="min-w-[100px]" style={{ width: width }}>
       <Listbox {...props}>
         <div className="relative">
-          <Listbox.Button className="cursor-default flex bg-white w-full border-[1px] border-gray-200 border-solid rounded-md shadow text-left pl-3 py-1">
-            <span className="grow">{props.value.text}</span>
+          <Listbox.Button className="relative cursor-default flex bg-white w-full border-[1px] border-gray-200 border-solid rounded-md shadow text-left pl-3 py-1">
+            <span className="grow truncate">{props.value.text}</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -37,7 +37,7 @@ export const DropDown = ({ data, width, ...props }: IDropDownProps) => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Listbox.Options className="absolute w-full py-1 bg-white border-[1px] border-gray-200 border-solid rounded-md shadow text-left  mt-1 overflow-hidden">
+            <Listbox.Options className="absolute w-full py-1 bg-white border-[1px] border-gray-200 border-solid rounded-md shadow text-left mt-1 overflow-y-scroll overflow-x-hidden max-h-[25vh]">
               {data.map((d) => (
                 <Listbox.Option
                   className={({ active }) =>
@@ -50,7 +50,7 @@ export const DropDown = ({ data, width, ...props }: IDropDownProps) => {
                 >
                   {({ selected }) => (
                     <motion.div
-                      className="w-full"
+                      className="w-full truncate"
                       whileHover={{ scale: 1.005 }}
                     >
                       {selected ? (
@@ -71,7 +71,7 @@ export const DropDown = ({ data, width, ...props }: IDropDownProps) => {
                           </svg>
                         </span>
                       ) : null}
-                      <span className="pl-10">{d.text}</span>
+                      <span className="pl-10 w-full">{d.text}</span>
                     </motion.div>
                   )}
                 </Listbox.Option>

@@ -9,4 +9,10 @@ async function HandleOnLoad(empNo: string): Promise<TimePageType> {
   return data as TimePageType
 }
 
+async function GetIP(): Promise<string> {
+  const res = await fetch('https://api.ipify.org/?format=json')
+  const data = await res.json()
+  console.log(data)
+}
+
 export { HandleOnLoad }
