@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -6,8 +7,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using react_tutorial.Model.Context;
+using System.Text;
 
 namespace react_tutorial
 {
@@ -44,6 +47,27 @@ namespace react_tutorial
                     .AllowAnyHeader()
                     .AllowAnyMethod());
             });
+
+            // Retrieve JWT settings from appsettings.json
+            var jwtSettings = Configuration.GetSection("JwtSettings");
+            var issuer = jwtSettings.GetValue<string>("Issuer");
+            var audience = jwtSettings.GetValue<string>("Audience");
+            var secretKey = jwtSettings.GetValue<string>("SecretKey");
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = issuer,
+                ValidAudience = audience,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
+            };
+        });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -91,6 +115,7 @@ namespace react_tutorial
                     //spa.UseReactDevelopmentServer(npmScript: "dev");
                 }
             });
+            app.UseAuthentication();
         }
     }
 }
