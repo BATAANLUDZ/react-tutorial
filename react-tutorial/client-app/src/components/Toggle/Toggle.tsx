@@ -15,9 +15,9 @@ export const Toggle = (props: IToggleProps) => {
         <button
           className={`${
             checked
-              ? "bg-black after:content-['WFH'] after:text-white after:absolute after:left-[10px]"
-              : "bg-gray-200 after:content-['F2F'] after:ml-3"
-          } relative inline-flex h-10 w-24 items-center rounded-full font-bold shadow-md font-orbit pointer-events-none`}
+              ? "bg-red-800 after:content-['WFH'] after:text-white after:absolute after:left-[17px]"
+              : "bg-gray-200 after:content-['F2F'] after:ml-3 text-red-800"
+          } relative inline-flex h-10 w-24 items-center rounded-full font-bold shadow-md font-orbit`}
         >
           <span className="sr-only">Enable notifications</span>
           <span

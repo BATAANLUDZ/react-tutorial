@@ -3,7 +3,11 @@ export default {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
     fontFamily: {
-      pt: ['PT Sans', 'sans-serif'],
+      dosis: ['Dosis', 'sans-serif'],
+      fuzy: ['Fuzzy Bubbles', 'cursive'],
+      maniac: ['Monomaniac One', 'sans-serif'],
+      marker: ['Permanent Marker', 'cursive'],
+      kalam: ['Kalam', 'cursive'],
     },
   },
   plugins: [],

@@ -9,19 +9,18 @@ interface IHeaderProps {
 
 export const Header = (props: IHeaderProps) => {
   return (
-    <div className="max-h-[8vh] h-[10vh] rounded shadow-md border-[1px] border-gray-300 border-opacity-40 border-solid flex px-[7em]">
+    <div className="max-h-[8vh] h-[10vh]  flex px-[7em]">
+      <span className="grow flex items-center text-[35px] font-bold font-fuzy">
+        OAMS
+      </span>
       <ul className="grow flex items-center">
         {props.menus.map((m: MenuType, index: number) => (
-          <motion.li
-            key={index}
-            className="leading-[8vh]"
-            whileHover={{ background: 'gray', color: 'white' }}
-          >
+          <motion.li key={index} className="leading-[8vh] rounded-b-[30px]">
             <NavLink
               to={m.path}
               className={({ isActive }) =>
                 isActive
-                  ? 'bg-black h-full active block text-white px-5'
+                  ? 'bg-black h-full active block text-white px-5 rounded-b-[30px] shadow-md'
                   : 'font-normal px-5'
               }
             >

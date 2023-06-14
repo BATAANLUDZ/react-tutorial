@@ -4,8 +4,8 @@ import TimePage from './pages/TimePage/TimePage'
 
 function App() {
   return (
-    <div className="h-screen w-screen grid grid-rows-[10vh,_1fr] gap-3 font-pt">
-      <div>
+    <div className="h-screen w-screen grid grid-rows-[10vh,_1fr] gap-3">
+      <div className="font-fuzy text-[13px] font-bold">
         <Header
           userName="Test User"
           menus={[

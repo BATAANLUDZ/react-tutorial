@@ -13,10 +13,10 @@ export interface IDropDownProps {
 
 export const DropDown = ({ data, width, ...props }: IDropDownProps) => {
   return (
-    <div className="min-w-[100px]" style={{ width: width }}>
+    <div className="min-w-[100px] text-[13px]" style={{ width: width }}>
       <Listbox {...props}>
         <div className="relative">
-          <Listbox.Button className="relative cursor-default flex bg-white w-full border-[1px] border-gray-200 border-solid rounded-md shadow text-left pl-3 py-1">
+          <Listbox.Button className="relative cursor-default flex items-center bg-white w-full border-[1px] border-gray-200 border-solid rounded-md shadow text-left pl-3 py-1">
             <span className="grow truncate">{props.value.text}</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -37,7 +37,7 @@ export const DropDown = ({ data, width, ...props }: IDropDownProps) => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Listbox.Options className="absolute w-full py-1 bg-white border-[1px] border-gray-200 border-solid rounded-md shadow text-left mt-1 overflow-y-scroll overflow-x-hidden max-h-[25vh]">
+            <Listbox.Options className="font-bold absolute w-full py-1 bg-white border-[1px] border-gray-200 border-solid rounded-md shadow text-left mt-1 overflow-y-scroll overflow-x-hidden max-h-[25vh]">
               {data.map((d) => (
                 <Listbox.Option
                   className={({ active }) =>

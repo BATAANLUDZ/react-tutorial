@@ -3,9 +3,10 @@ import { Button } from '../../components/Button/Button'
 import { ButtonStyle } from '../../helpers/enums'
 import { useDate } from '../../hooks/useDate'
 import { useQuery } from 'react-query'
-import { HandleOnLoad } from '../../apis/time'
+import { GetIP, HandleOnLoad } from '../../apis/time'
 import { DropDown } from '../../components/DropDown/DropDown'
 import { DropDownType, Project, Shift } from '../../types'
+import { Toggle } from '../../components/Toggle/Toggle'
 
 export default function TimePage() {
   const date = useDate()
@@ -14,8 +15,9 @@ export default function TimePage() {
   const [selectedShift, setSelectedShift] = useState<DropDownType>()
   const [projects, setProjects] = useState<DropDownType[]>([] as DropDownType[])
   const [selectedProject, setSelectedProject] = useState<DropDownType>()
+  const { data } = useQuery({ queryKey: ['workMode'], queryFn: GetIP })
 
-  const { data, isLoading } = useQuery({
+  const { data: initialData, isLoading } = useQuery({
     queryKey: ['timePage', 'CT12032'],
     queryFn: () => HandleOnLoad('CT12032'),
     onSuccess: (data) => {
@@ -27,7 +29,7 @@ export default function TimePage() {
       })
 
       setShifts([...ddlShifts])
-      setSelectedShift(ddlShifts[0])
+      setSelectedShift({ text: 'Select Shift', value: 0 })
 
       const ddlProjects = data.projects.map((p: Project) => {
         return {
@@ -37,30 +39,30 @@ export default function TimePage() {
       })
 
       setProjects([...ddlProjects])
-      setSelectedProject(ddlProjects[0])
+      setSelectedProject({ text: 'Select Project', value: 0 })
     },
   })
 
   if (isLoading) return <h1>loading</h1>
 
   return (
-    <div className="h-full flex justify-center items-center font-pt">
-      <div className="border-[1px] border-gray-300 border-opacity-40 border-solid rounded-[100px] shadow-xl inline-flex flex-wrap items-center flex-col w-[50vw] py-10">
+    <div className="h-full flex justify-center items-center">
+      <div className=" inline-flex flex-wrap items-center flex-col w-[50vw] py-10">
         <div>
-          <p className="text-[40px] text-red-800">{`${date.date}`}</p>
+          <p className="font-bold text-[40px] text-red-800 font-fuzy">{`${date.date}`}</p>
         </div>
         <div className="flex">
-          <p className="text-[100px] font-bold">{`${date.timeOnly}`}</p>
+          <p className="text-[100px] font-maniac font-bold">{`${date.timeOnly}`}</p>
         </div>
-        <div>
-          <p className="text-[30px] font-bold text-red-800">WFH</p>
+        <div className="mb-2 font-fuzy">
+          <Toggle checked={workMode} onChange={setWorkMode} />
         </div>
-        <div className="flex justify-center gap-1 mb-2">
+        <div className="flex justify-center gap-1 mb-2 font-fuzy">
           <DropDown
             data={shifts}
             value={selectedShift!}
             onChange={setSelectedShift}
-            width={100}
+            width={120}
           />
 
           <DropDown
@@ -72,9 +74,13 @@ export default function TimePage() {
         </div>
         <div>
           <Button
-            className="h-[100px] w-[200px] text-[40px]"
-            text="Time-in"
-            btnType={data ? ButtonStyle.Secondary : ButtonStyle.Primary}
+            className="h-[60px] text-[35px] font-fuzy text-bold"
+            text={initialData?.isLoggedIn ? 'Log-out' : 'Log-in'}
+            btnType={
+              initialData?.isLoggedIn
+                ? ButtonStyle.Secondary
+                : ButtonStyle.Primary
+            }
             onClick={() => alert(date.timeOnly)}
           />
         </div>
