@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using react_tutorial.DTO;
@@ -14,6 +15,7 @@ namespace react_tutorial.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TimeController : ControllerBase
     {
         OAMSContext _context;
@@ -22,6 +24,7 @@ namespace react_tutorial.Controllers
             _context = context;
         }
         [HttpGet]
+    
         public IActionResult Index([FromQuery] string employeeNo)
         {
             if (string.IsNullOrEmpty(employeeNo))
