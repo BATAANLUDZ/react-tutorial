@@ -1,3 +1,4 @@
-import { atom } from 'jotai'
+import { atomWithStorage, createJSONStorage } from 'jotai/utils'
 
-const tokenAtom = atom<string | null>(null)
+const storage = createJSONStorage(() => sessionStorage)
+export const tokenAtom = atomWithStorage('token', null, storage)
