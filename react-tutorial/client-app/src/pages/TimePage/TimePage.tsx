@@ -49,15 +49,15 @@ export default function TimePage() {
     <div className="h-full flex justify-center items-center">
       <div className=" inline-flex flex-wrap items-center flex-col w-[50vw] py-10">
         <div>
-          <p className="font-bold text-[40px] text-red-800 font-fuzy">{`${date.date}`}</p>
+          <p className="font-bold text-[40px] text-red-800 font-shareMono">{`${date.date}`}</p>
         </div>
         <div className="flex">
-          <p className="text-[100px] font-maniac font-bold">{`${date.timeOnly}`}</p>
+          <p className="text-[100px] font-shareMono font-bold">{`${date.timeOnly}`}</p>
         </div>
-        <div className="mb-2 font-fuzy">
+        <div className="mb-2 font-shareMono">
           <Toggle checked={workMode} onChange={setWorkMode} />
         </div>
-        <div className="flex justify-center gap-1 mb-2 font-fuzy">
+        <div className="flex justify-center gap-1 mb-2 font-share">
           <DropDown
             data={shifts}
             value={selectedShift!}
@@ -74,7 +74,7 @@ export default function TimePage() {
         </div>
         <div>
           <Button
-            className="h-[60px] text-[35px] font-fuzy text-bold"
+            className="h-[60px] text-[35px] font-shareMono text-bold"
             text={initialData?.isLoggedIn ? 'Log-out' : 'Log-in'}
             btnType={
               initialData?.isLoggedIn

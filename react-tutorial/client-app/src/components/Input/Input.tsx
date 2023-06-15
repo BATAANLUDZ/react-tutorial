@@ -53,7 +53,7 @@ export const Input = ({
 
       <input
         className={`peer focus:ring-2 ${
-          props.error ? 'ring-red-300' : 'ring-violet-300'
+          props.error ? 'ring-red-300' : 'ring-black'
         } w-full pl-3 ${
           props.error ? 'border-red-500' : 'border-gray-300'
         } border-solid border-[1px] shadow focus:outline-none rounded-md py-1 bg-red-500/0 -z-0`}
@@ -63,8 +63,8 @@ export const Input = ({
         className={`pointer-events-none bg-white  absolute p-0 px-[2.5px] rounded-full left-3 peer-focus:-translate-y-[18px] peer-focus:scale-[0.6] ${
           props.error
             ? 'peer-focus:[&>*]:text-red-500'
-            : 'peer-focus:[&>*]:text-violet-300'
-        } peer-focus:[&>*]:tracking-wider transition peer-focus:font-semibold ease-in-out duration-200 origin-left`}
+            : 'peer-focus:[&>*]:text-black'
+        } peer-focus:[&>*]:tracking-wider transition peer-focus:font-semibold ease-in-out duration-150 origin-left`}
       >
         <p className={`text-${props.error ? 'red-500' : 'gray-300'}`}>
           {placeholder}

@@ -3,7 +3,8 @@ export default {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
     fontFamily: {
-      dosis: ['Dosis', 'sans-serif'],
+      shareMono: ['Share Tech Mono', 'monospace'],
+      share: ['Share', 'cursive'],
       fuzy: ['Fuzzy Bubbles', 'cursive'],
       maniac: ['Monomaniac One', 'sans-serif'],
       marker: ['Permanent Marker', 'cursive'],

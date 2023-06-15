@@ -10,7 +10,7 @@ interface IHeaderProps {
 export const Header = (props: IHeaderProps) => {
   return (
     <div className="max-h-[8vh] h-[10vh]  flex px-[7em]">
-      <span className="grow flex items-center text-[35px] font-bold font-fuzy">
+      <span className="grow flex items-center text-[35px] font-bold font-share">
         OAMS
       </span>
       <ul className="grow flex items-center">
