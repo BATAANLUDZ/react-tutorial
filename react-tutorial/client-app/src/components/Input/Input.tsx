@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { ComponentPropsWithoutRef } from 'react'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface IInputProps
@@ -49,22 +48,27 @@ export const Input = React.forwardRef<HTMLInputElement, IInputProps>(
         ) : null}
 
         <input
-          className={`peer focus:ring-2 ${
+          className={`peer focus:ring-2 placeholder:text-transparent ${
             props.error ? 'ring-red-300' : 'ring-black'
           } w-full pl-3 ${
             props.error ? 'border-red-500' : 'border-gray-300'
           } border-solid border-[1px] shadow focus:outline-none rounded-md py-1 bg-red-500/0 -z-0`}
           {...props}
           ref={ref}
+          placeholder={placeholder}
         ></input>
         <div
-          className={`pointer-events-none bg-white  absolute p-0 px-[2.5px] rounded-full left-3 peer-focus:-translate-y-[18px] peer-focus:scale-[0.6] ${
+          className={`pointer-events-none absolute p-0 px-[2.5px] rounded-full left-3 peer-focus:-translate-y-[18px] peer-focus:scale-[0.6] peer-focus:peer-[:not(:placeholder-shown)]:[&>*]:-translate-y-[0px] peer-[:not(:placeholder-shown)]:[&>*]:-translate-y-[18px] peer-[:not(:placeholder-shown)]:[&>*]:scale-[0.6] peer-focus:peer-[:not(:placeholder-shown)]:[&>*]:scale-[1] ${
             props.error
-              ? 'peer-focus:[&>*]:text-red-500'
+              ? 'peer-focus:[&>*]:text-red-500 peer-[:not(:placeholder-shown)]:[&>*]:text-red-500'
               : 'peer-focus:[&>*]:text-black'
-          } peer-focus:[&>*]:tracking-wider transition peer-focus:font-semibold ease-in-out duration-150 origin-left`}
+          } peer-focus:[&>*]:tracking-wider peer-focus:[&>*]:transition peer-focus:[&>*]:font-semibold peer-focus:[&>*]:duration-150  origin-left peer-[:not(:placeholder-shown)]:[&>*]:duration-0 peer-focus:peer-[:not(:placeholder-shown)]:[&>*]:duration-0 peer-[:not(:placeholder-shown)]:[&>*]:tracking-wider peer-[:not(:placeholder-shown)]:[&>*]:font-semibold peer-[:not(:placeholder-shown)]:[&>*]:origin-left`}
         >
-          <p className={`text-${props.error ? 'red-500' : 'gray-300'}`}>
+          <p
+            className={`bg-white px-1 text-${
+              props.error ? 'red-500' : 'gray-300'
+            }`}
+          >
             {placeholder}
           </p>
         </div>
