@@ -38,8 +38,8 @@ export default function LoginPage() {
             text={'Login'}
             btnType={ButtonStyle.Secondary}
             className="font-shareMono "
-            onClick={handleSubmit((e) => {
-              console.log(e)
+            onClick={handleSubmit(({ username, password }) => {
+              HandleLoginAsync(username, password)
             })}
           />
         </div>
