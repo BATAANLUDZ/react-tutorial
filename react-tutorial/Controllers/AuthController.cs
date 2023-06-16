@@ -13,6 +13,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
+using react_tutorial.DTO;
 
 namespace react_tutorial.Controllers
 {
@@ -30,22 +31,19 @@ namespace react_tutorial.Controllers
         public IActionResult Login([FromBody] LoginDTO user)
         {
             if (user is null)
-            {
                 return BadRequest("Invalid client request");
-            }
 
-            // Validate user credentials using the stored procedure
-            var result = ValidateUserCredentials(user.UserName, user.Password);
-            if (result == null)
+            var userInfo = ValidateUserCredentials(user.UserName, user.Password);
+
+            var result = new ResultDTO<string>
             {
-                return NotFound("Invalid username and Password.!");
-            }
+                IsSuccess = userInfo is null ? false : true,
+                Data = userInfo is null ? null : GenerateJwtToken(userInfo),
+                Message = userInfo is null ? "User not Found" : "Login Success"
+            };
 
-            // Generate JWT token using the user information
-            var token = GenerateJwtToken(result);
-            return Ok(new AuthenticatedResponse { Token = token });
+            return Ok(result);
         }
-
         private UserDTO ValidateUserCredentials(string userName, string password)
         {
             // Call the stored procedure to fetch user information
@@ -67,18 +65,18 @@ namespace react_tutorial.Controllers
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-            new Claim("EmpNum", result.EmpNum),
-            new Claim("FullName", result.FullName),
-            new Claim("Position", result.Position),
-            new Claim("Shift", result.Shift),
-            new Claim("ProjectID", result.ProjectID.ToString()),
-            new Claim("WorkMode", result.WorkMode),
-            // Add more claims as needed
-        }),
-                Expires = DateTime.UtcNow.AddMinutes(5),
-                Issuer = _configuration["JwtSettings:Issuer"],
-                Audience = _configuration["JwtSettings:Audience"],
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                 new Claim("EmpNum", result.EmpNum),
+                 new Claim("FullName", result.FullName),
+                 new Claim("Position", result.Position),
+                 new Claim("Shift", result.Shift),
+                 new Claim("ProjectID", result.ProjectID.ToString()),
+                 new Claim("WorkMode", result.WorkMode),
+                 // Add more claims as needed
+            }),
+                 Expires = DateTime.UtcNow.AddMinutes(5),
+                 Issuer = _configuration["JwtSettings:Issuer"],
+                 Audience = _configuration["JwtSettings:Audience"],
+                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
