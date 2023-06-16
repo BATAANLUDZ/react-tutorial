@@ -38,7 +38,7 @@ namespace react_tutorial.Controllers
             var result = ValidateUserCredentials(user.UserName, user.Password);
             if (result == null)
             {
-                return Unauthorized();
+                return NotFound("Invalid username and Password.!");
             }
 
             // Generate JWT token using the user information
