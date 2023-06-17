@@ -23,3 +23,9 @@ export type TimePageType = {
   shifts: Shift[]
   isLoggedIn: boolean
 }
+
+export type ApiResult<T> = {
+  isSuccess: boolean
+  data: T | null
+  message: string
+}

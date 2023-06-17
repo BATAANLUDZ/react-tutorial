@@ -7,16 +7,15 @@ import { Input } from '../../components/Input/Input'
 import { ButtonStyle } from '../../helpers/enums'
 import { HandleLoginAsync } from '../../apis/login'
 import { useMutation } from 'react-query'
-import { Skeleton } from '@mui/material'
+import toast from 'react-hot-toast'
 
 export default function LoginPage() {
   const setToken = useSetAtom(tokenAtom)
-  const userToken = useAtomValue(tokenAtom)
   const { register, handleSubmit } = useForm({
     defaultValues: { username: '', password: '' },
   })
 
-  const { mutate: login, isError, error } = useMutation({
+  const { mutate: login } = useMutation({
     mutationFn: ({
       username,
       password,
@@ -25,7 +24,9 @@ export default function LoginPage() {
       password: string
     }) => HandleLoginAsync(username, password),
     onSuccess: (data) => {
-      setToken(data)
+      if (!data.isSuccess)
+        toast.error(data.message, { position: 'bottom-right' })
+      setToken(data.data)
     },
   })
 

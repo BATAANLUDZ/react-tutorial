@@ -15,12 +15,17 @@ export default function TimePage() {
   const date = useDate()
   const [workMode, setWorkMode] = useState<boolean>(false)
   const [shifts, setShifts] = useState<DropDownType[]>([] as DropDownType[])
-  const [selectedShift, setSelectedShift] = useState<DropDownType>()
+  const [selectedShift, setSelectedShift] = useState<DropDownType>(shifts[0])
   const [projects, setProjects] = useState<DropDownType[]>([] as DropDownType[])
-  const [selectedProject, setSelectedProject] = useState<DropDownType>()
+  const [selectedProject, setSelectedProject] = useState<DropDownType>(
+    projects[0],
+  )
   const { data } = useQuery({ queryKey: ['workMode'], queryFn: GetIP })
 
-  const { data: initialData, isFetching } = useQuery<TimePageType, AxiosError>({
+  const { data: initialData, isFetching, isLoading } = useQuery<
+    TimePageType,
+    AxiosError
+  >({
     queryKey: ['timePage', 'CT12032'],
     queryFn: () => HandleOnLoad('CT12032'),
     refetchOnWindowFocus: false,
@@ -48,7 +53,11 @@ export default function TimePage() {
     },
   })
 
-  return !isFetching ? (
+  if (isFetching) return <h1>Fetching</h1>
+
+  if (isLoading) return <h1>Loading</h1>
+
+  return (
     <div className="h-full flex justify-center items-center">
       <div className=" inline-flex flex-wrap items-center flex-col w-[50vw] py-10">
         <div>
@@ -90,7 +99,5 @@ export default function TimePage() {
       </div>
       <Toaster />
     </div>
-  ) : (
-    <Fragment />
   )
 }

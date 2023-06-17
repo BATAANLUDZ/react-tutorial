@@ -1,7 +1,9 @@
+import { ApiResult } from '../../types'
+
 async function HandleLoginAsync(
   username: string,
   password: string,
-): Promise<string> {
+): Promise<ApiResult<string>> {
   const res = await fetch(`https://localhost:44319/api/Auth/login`, {
     method: 'POST',
     headers: {
@@ -10,9 +12,11 @@ async function HandleLoginAsync(
     body: JSON.stringify({ username: username, password: password }),
   })
 
-  const data: { token: string } = await res.json()
+  if (!res.ok) throw new Error(res.statusText)
 
-  return data.token
+  const data: unknown = await res.json()
+
+  return data as ApiResult<string>
 }
 
 export { HandleLoginAsync }

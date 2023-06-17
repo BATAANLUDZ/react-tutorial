@@ -9,7 +9,7 @@ export const ErrorBoundaries = ({
   return (
     <div className="h-full flex justify-center items-center">
       <div className="flex flex-col gap-3 font-shareMono">
-        <p className="text-[30px]">Error: {error.message}</p>
+        <p className="text-[20px]">Error: {error.message}</p>
         <div className="text-center">
           <Button
             text="Reload"
