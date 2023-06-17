@@ -1,5 +1,4 @@
-import { useAtom } from 'jotai'
-import { RESET } from 'jotai/utils'
+import { useSetAtom, useAtomValue } from 'jotai'
 import { useForm } from 'react-hook-form'
 
 import { tokenAtom } from '../../atoms'
@@ -7,11 +6,27 @@ import { Button } from '../../components/Button/Button'
 import { Input } from '../../components/Input/Input'
 import { ButtonStyle } from '../../helpers/enums'
 import { HandleLoginAsync } from '../../apis/login'
+import { useMutation } from 'react-query'
+import { Skeleton } from '@mui/material'
 
 export default function LoginPage() {
-  //   const [token, setToken] = useAtom(tokenAtom)
+  const setToken = useSetAtom(tokenAtom)
+  const userToken = useAtomValue(tokenAtom)
   const { register, handleSubmit } = useForm({
     defaultValues: { username: '', password: '' },
+  })
+
+  const { mutate: login, isError, error } = useMutation({
+    mutationFn: ({
+      username,
+      password,
+    }: {
+      username: string
+      password: string
+    }) => HandleLoginAsync(username, password),
+    onSuccess: (data) => {
+      setToken(data)
+    },
   })
 
   return (
@@ -38,9 +53,7 @@ export default function LoginPage() {
             text={'Login'}
             btnType={ButtonStyle.Secondary}
             className="font-shareMono "
-            onClick={handleSubmit(({ username, password }) => {
-              HandleLoginAsync(username, password)
-            })}
+            onClick={handleSubmit(login)}
           />
         </div>
       </div>

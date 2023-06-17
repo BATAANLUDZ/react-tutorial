@@ -12,16 +12,25 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@headlessui/react": "^1.7.15",
+    "@mui/material": "^5.13.5",
+    "@mui/styled-engine-sc": "^5.12.0",
     "autoprefixer": "^10.4.14",
+    "axios": "^1.4.0",
     "framer-motion": "^10.12.16",
     "jotai": "^2.2.0",
     "postcss": "^8.4.24",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-error-boundary": "^4.0.10",
     "react-hook-form": "^7.44.3",
+    "react-hot-toast": "^2.4.1",
+    "react-jwt": "^1.2.0",
     "react-query": "^3.39.3",
     "react-router-dom": "^6.11.2",
+    "styled-components": "^6.0.0-rc.3",
     "tailwindcss": "^3.3.2"
   },
   "devDependencies": {

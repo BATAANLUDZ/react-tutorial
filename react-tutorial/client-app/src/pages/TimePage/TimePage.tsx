@@ -1,12 +1,15 @@
-import { useState } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
+
+import { Fragment, useState } from 'react'
 import { Button } from '../../components/Button/Button'
 import { ButtonStyle } from '../../helpers/enums'
 import { useDate } from '../../hooks/useDate'
 import { useQuery } from 'react-query'
 import { GetIP, HandleOnLoad } from '../../apis/time'
 import { DropDown } from '../../components/DropDown/DropDown'
-import { DropDownType, Project, Shift } from '../../types'
+import { DropDownType, Project, Shift, TimePageType } from '../../types'
 import { Toggle } from '../../components/Toggle/Toggle'
+import { AxiosError } from 'axios'
 
 export default function TimePage() {
   const date = useDate()
@@ -17,9 +20,11 @@ export default function TimePage() {
   const [selectedProject, setSelectedProject] = useState<DropDownType>()
   const { data } = useQuery({ queryKey: ['workMode'], queryFn: GetIP })
 
-  const { data: initialData, isLoading } = useQuery({
+  const { data: initialData, isFetching } = useQuery<TimePageType, AxiosError>({
     queryKey: ['timePage', 'CT12032'],
     queryFn: () => HandleOnLoad('CT12032'),
+    refetchOnWindowFocus: false,
+    suspense: true,
     onSuccess: (data) => {
       const ddlShifts = data.shifts.map((s: Shift) => {
         return {
@@ -43,9 +48,7 @@ export default function TimePage() {
     },
   })
 
-  if (isLoading) return <h1>loading</h1>
-
-  return (
+  return !isFetching ? (
     <div className="h-full flex justify-center items-center">
       <div className=" inline-flex flex-wrap items-center flex-col w-[50vw] py-10">
         <div>
@@ -85,6 +88,9 @@ export default function TimePage() {
           />
         </div>
       </div>
+      <Toaster />
     </div>
+  ) : (
+    <Fragment />
   )
 }

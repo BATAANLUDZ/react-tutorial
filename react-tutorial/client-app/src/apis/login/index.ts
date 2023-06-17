@@ -1,4 +1,7 @@
-async function HandleLoginAsync(username: string, password: string) {
+async function HandleLoginAsync(
+  username: string,
+  password: string,
+): Promise<string> {
   const res = await fetch(`https://localhost:44319/api/Auth/login`, {
     method: 'POST',
     headers: {
@@ -7,8 +10,9 @@ async function HandleLoginAsync(username: string, password: string) {
     body: JSON.stringify({ username: username, password: password }),
   })
 
-  console.log(res)
-  const data: unknown = await res.json()
+  const data: { token: string } = await res.json()
+
+  return data.token
 }
 
 export { HandleLoginAsync }
