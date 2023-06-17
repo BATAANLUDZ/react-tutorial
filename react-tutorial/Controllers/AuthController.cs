@@ -73,7 +73,7 @@ namespace react_tutorial.Controllers
                  new Claim("WorkMode", result.WorkMode),
                  // Add more claims as needed
             }),
-                 Expires = DateTime.UtcNow.AddMinutes(5),
+                 Expires = DateTime.UtcNow.AddDays(1),
                  Issuer = _configuration["JwtSettings:Issuer"],
                  Audience = _configuration["JwtSettings:Audience"],
                  SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
