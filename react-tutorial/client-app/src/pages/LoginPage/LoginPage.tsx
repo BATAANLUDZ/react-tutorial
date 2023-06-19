@@ -6,7 +6,7 @@ import { Button } from '../../components/Button/Button'
 import { Input } from '../../components/Input/Input'
 import { ButtonStyle } from '../../helpers/enums'
 import { HandleLoginAsync } from '../../apis/login'
-import { useMutation } from 'react-query'
+import { useMutation } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 
 export default function LoginPage() {

@@ -7,7 +7,7 @@ async function HandleOnLoad(empNo: string): Promise<TimePageType> {
     {
       maxBodyLength: Infinity,
       headers: {
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJFbXBOdW0iOiJDVDEyMTMxIiwiRnVsbE5hbWUiOiJMT0NTSU4sIEpPRVZBTk5JIiwiUG9zaXRpb24iOiJTWVNURU0gUFJPR1JBTU1FUiIsIlNoaWZ0IjoiOCBBTS01IFBNIiwiUHJvamVjdElEIjoiNDQiLCJXb3JrTW9kZSI6IldGSCIsIm5iZiI6MTY4Njk4NzIwMywiZXhwIjoxNjg3MDczNjAzLCJpYXQiOjE2ODY5ODcyMDMsImlzcyI6IkVQU09OIiwiYXVkIjoiRVBTT04ifQ.osUpiMjnWWzl-uyApuZru60jE8burAm65obX07W5K78`,
+        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJFbXBOdW0iOiJDVDEyMTMxIiwiRnVsbE5hbWUiOiJMT0NTSU4sIEpPRVZBTk5JIiwiUG9zaXRpb24iOiJTWVNURU0gUFJPR1JBTU1FUiIsIlNoaWZ0IjoiOCBBTS01IFBNIiwiUHJvamVjdElEIjoiNDQiLCJXb3JrTW9kZSI6IldGSCIsIm5iZiI6MTY4NzEzMDQ0MSwiZXhwIjoxNjg3MjE2ODQxLCJpYXQiOjE2ODcxMzA0NDEsImlzcyI6IkVQU09OIiwiYXVkIjoiRVBTT04ifQ.BMNVYFpB-pBF9dTqL6jpDu1xAzvb3FcqS-a3TKDby0o`,
       },
     },
   )

@@ -1,15 +1,23 @@
 import toast, { Toaster } from 'react-hot-toast'
+import { Fragment, useEffect, useState } from 'react'
+import { AxiosError } from 'axios'
+import { lazy, Suspense } from 'react'
 
-import { Fragment, useState } from 'react'
 import { Button } from '../../components/Button/Button'
 import { ButtonStyle } from '../../helpers/enums'
 import { useDate } from '../../hooks/useDate'
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 import { GetIP, HandleOnLoad } from '../../apis/time'
 import { DropDown } from '../../components/DropDown/DropDown'
 import { DropDownType, Project, Shift, TimePageType } from '../../types'
 import { Toggle } from '../../components/Toggle/Toggle'
-import { AxiosError } from 'axios'
+import TimeLoading from './TimeLoading'
+
+// const DropDown = lazy(() =>
+//   import('../../components/DropDown/DropDown').then((module) => ({
+//     default: module.DropDown,
+//   })),
+// )
 
 export default function TimePage() {
   const date = useDate()
@@ -20,7 +28,7 @@ export default function TimePage() {
   const [selectedProject, setSelectedProject] = useState<DropDownType>(
     projects[0],
   )
-  const { data } = useQuery({ queryKey: ['workMode'], queryFn: GetIP })
+  // const { data } = useQuery({ queryKey: ['workMode'], queryFn: GetIP })
 
   const { data: initialData, isFetching, isLoading } = useQuery<
     TimePageType,
@@ -29,7 +37,7 @@ export default function TimePage() {
     queryKey: ['timePage', 'CT12032'],
     queryFn: () => HandleOnLoad('CT12032'),
     refetchOnWindowFocus: false,
-    suspense: true,
+    useErrorBoundary: true,
     onSuccess: (data) => {
       const ddlShifts = data.shifts.map((s: Shift) => {
         return {
@@ -53,9 +61,7 @@ export default function TimePage() {
     },
   })
 
-  if (isFetching) return <h1>Fetching</h1>
-
-  if (isLoading) return <h1>Loading</h1>
+  if (isLoading || isFetching) return <TimeLoading />
 
   return (
     <div className="h-full flex justify-center items-center">
@@ -72,14 +78,14 @@ export default function TimePage() {
         <div className="flex justify-center gap-1 mb-2 font-share">
           <DropDown
             data={shifts}
-            value={selectedShift!}
+            value={selectedShift}
             onChange={setSelectedShift}
             width={120}
           />
 
           <DropDown
             data={projects}
-            value={selectedProject!}
+            value={selectedProject}
             onChange={setSelectedProject}
             width={400}
           />

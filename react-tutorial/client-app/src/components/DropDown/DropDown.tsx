@@ -12,12 +12,16 @@ export interface IDropDownProps {
 }
 
 export const DropDown = ({ data, width, ...props }: IDropDownProps) => {
+  React.useEffect(() => {
+    console.log('drodown re-render')
+  }, [])
+
   return (
     <div className="min-w-[100px] text-[13px]" style={{ width: width }}>
       <Listbox {...props}>
         <div className="relative">
           <Listbox.Button className="relative cursor-default flex items-center bg-white w-full border-[1px] border-gray-200 border-solid rounded-md shadow text-left pl-3 py-1">
-            <span className="grow truncate">{props.value.text}</span>
+            <span className="grow truncate">{props?.value?.text}</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
