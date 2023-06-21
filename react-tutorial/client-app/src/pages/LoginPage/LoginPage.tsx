@@ -1,4 +1,4 @@
-import { useSetAtom, useAtomValue } from 'jotai'
+import { useSetAtom } from 'jotai'
 import { useForm } from 'react-hook-form'
 
 import { tokenAtom } from '../../atoms'
@@ -11,7 +11,7 @@ import toast from 'react-hot-toast'
 
 export default function LoginPage() {
   const setToken = useSetAtom(tokenAtom)
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, setValue } = useForm({
     defaultValues: { username: '', password: '' },
   })
 
@@ -24,9 +24,12 @@ export default function LoginPage() {
       password: string
     }) => HandleLoginAsync(username, password),
     onSuccess: (data) => {
-      if (!data.isSuccess)
+      if (!data.isSuccess) {
         toast.error(data.message, { position: 'bottom-right' })
-      setToken(data.data)
+        setValue('username', '')
+        setValue('password', '')
+      }
+      setToken(data.data || '')
     },
   })
 

@@ -29,3 +29,11 @@ export type ApiResult<T> = {
   data: T | null
   message: string
 }
+
+export type User = {
+  EmpNum: string
+  FullName: string
+  Position: string
+  Shift: string
+  ProjectID: string
+}

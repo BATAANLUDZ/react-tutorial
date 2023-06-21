@@ -1,7 +1,6 @@
-import toast, { Toaster } from 'react-hot-toast'
-import { Fragment, useEffect, useState } from 'react'
+import { Toaster } from 'react-hot-toast'
+import { useState } from 'react'
 import { AxiosError } from 'axios'
-import { lazy, Suspense } from 'react'
 
 import { Button } from '../../components/Button/Button'
 import { ButtonStyle } from '../../helpers/enums'
@@ -9,17 +8,14 @@ import { useDate } from '../../hooks/useDate'
 import { useQuery } from '@tanstack/react-query'
 import { GetIP, HandleOnLoad } from '../../apis/time'
 import { DropDown } from '../../components/DropDown/DropDown'
-import { DropDownType, Project, Shift, TimePageType } from '../../types'
+import { DropDownType, Project, Shift, TimePageType, User } from '../../types'
 import { Toggle } from '../../components/Toggle/Toggle'
-import TimeLoading from './TimeLoading'
 
-// const DropDown = lazy(() =>
-//   import('../../components/DropDown/DropDown').then((module) => ({
-//     default: module.DropDown,
-//   })),
-// )
+interface ITimePageProps {
+  user: User
+}
 
-export default function TimePage() {
+export default function TimePage(props: ITimePageProps) {
   const date = useDate()
   const [workMode, setWorkMode] = useState<boolean>(false)
   const [shifts, setShifts] = useState<DropDownType[]>([] as DropDownType[])
@@ -30,14 +26,12 @@ export default function TimePage() {
   )
   // const { data } = useQuery({ queryKey: ['workMode'], queryFn: GetIP })
 
-  const { data: initialData, isFetching, isLoading } = useQuery<
-    TimePageType,
-    AxiosError
-  >({
-    queryKey: ['timePage', 'CT12032'],
-    queryFn: () => HandleOnLoad('CT12032'),
-    refetchOnWindowFocus: false,
+  const { data: initialData } = useQuery<TimePageType, AxiosError>({
+    queryKey: ['timePage', props.user.EmpNum],
+    queryFn: () => HandleOnLoad(props.user.EmpNum),
     useErrorBoundary: true,
+    suspense: true,
+    enabled: !!props.user.EmpNum,
     onSuccess: (data) => {
       const ddlShifts = data.shifts.map((s: Shift) => {
         return {
@@ -47,7 +41,6 @@ export default function TimePage() {
       })
 
       setShifts([...ddlShifts])
-      setSelectedShift({ text: 'Select Shift', value: 0 })
 
       const ddlProjects = data.projects.map((p: Project) => {
         return {
@@ -57,11 +50,8 @@ export default function TimePage() {
       })
 
       setProjects([...ddlProjects])
-      setSelectedProject({ text: 'Select Project', value: 0 })
     },
   })
-
-  if (isLoading || isFetching) return <TimeLoading />
 
   return (
     <div className="h-full flex justify-center items-center">
@@ -72,20 +62,31 @@ export default function TimePage() {
         <div className="flex">
           <p className="text-[100px] font-shareMono font-bold">{`${date.timeOnly}`}</p>
         </div>
-        <div className="mb-2 font-shareMono">
+        <div
+          className={`mb-2 font-shareMono ${
+            initialData?.isLoggedIn
+              ? 'pointer-events-none cursor-not-allowed'
+              : null
+          }`}
+        >
           <Toggle checked={workMode} onChange={setWorkMode} />
         </div>
-        <div className="flex justify-center gap-1 mb-2 font-share">
+        <div
+          className={`flex justify-center gap-1 mb-2 font-shareMono ${
+            initialData?.isLoggedIn
+              ? 'pointer-events-none cursor-not-allowed'
+              : null
+          }`}
+        >
           <DropDown
             data={shifts}
-            value={selectedShift}
+            value={selectedShift || { text: 'Select Shift', value: 0 }}
             onChange={setSelectedShift}
             width={120}
           />
-
           <DropDown
             data={projects}
-            value={selectedProject}
+            value={selectedProject || { text: 'Select Project', value: 0 }}
             onChange={setSelectedProject}
             width={400}
           />
